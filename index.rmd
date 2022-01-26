@@ -1,0 +1,16 @@
+---
+title: "index.rmd"
+author: "Lindsey Carlson"
+date: "1/26/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Lindsey Carlson Bio381 Website
+Homework and lab assignments will be posted below.
+
+### Homework Assignments
+* [Homework 2](Homework_02.html)
