@@ -2,7 +2,9 @@
 title: "Homework_02.rmd"
 author: "Lindsey Carlson"
 date: "1/26/2022"
-output: html_document
+prettydoc::html_pretty:
+    theme: leonids
+    highlight: github
 ---
 
 ```{r setup, include=FALSE}
