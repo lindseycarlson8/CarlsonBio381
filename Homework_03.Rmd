@@ -1,0 +1,65 @@
+---
+title: "Homework_03.rmd"
+author: "Lindsey Carlson"
+date: "2/2/2022"
+output: html_document
+---
+
+# Homework 3
+
+1. 
+```
+FIND: \h{2,}
+REPLACE: ,
+
+I used the h wildcard with the quantifier {2,} and replaced them all with commas. 
+```
+
+2. 
+```
+FIND: (\w+), (\w+), (\w+.*)
+REPLACE: \2 \1 \(\3\)
+
+I captured with the w wildcard and .* expression to change the order of words and add parenthesizes.
+```
+
+3.
+```
+FIND: .mp3 
+REPLACE: .mp3 \n
+
+Since each line ends with .mp3, one finds the phrase .mp3 (note there is a space after) and replaces it with just .mp3 and then the n wildcard.
+```
+
+4. 
+```
+FIND: (\d+)\s(\w.+)(.mp3)
+REPLACE: \2_\1\3
+
+I captured the following the d, s, and w wildcards with the .+ quantifier.  I then moved the capture order around and added an underscore.
+```
+
+5. 
+```
+FIND: (\w)(\w+),(\w+),(\d+.\d+),(\d+)
+REPLACE: \1\_\3,\5
+
+I used both the w and d wildcards to capture the first letter of the latin name and the last numeric variable.  From there I deleted some of the text and added an underline.
+```
+
+6. 
+```
+FIND: (\w)_(\w{4})(\w+),(\d+)
+REPLACE: \1_\2,\4
+
+I used the w and d wildcard to capture the first four letters of the latin name.  From there I was able to replace the second word with just the first four letters.
+```
+
+7. 
+```
+FIND: (\w{3})\w+,(\w{3})\w+,(\d+.\d+),(\d+)
+REPLACE: \1\2, \4, \3
+
+I used the w and d wildcard with the {3} quantifier to combine the first three letters of the first and second word. I then used the captures to rearrange the two numerics.  
+```
+
