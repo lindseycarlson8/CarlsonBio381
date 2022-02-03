@@ -1,9 +1,10 @@
 ---
-title: "index.rmd"
+title: "Computational Biology - Homepage"
 author: "Lindsey Carlson"
 date: "1/26/2022"
-prettydoc::html_pretty:
-    theme: leonids
+output:
+  prettydoc::html_pretty:
+    theme: architect
     highlight: github
 ---
 
@@ -12,7 +13,13 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 # Lindsey Carlson Bio381 Website
-Homework and lab assignments will be posted below.
+![](C:\Users\drand\Desktop\Comp Bio\ComputationalBiology\CarlsonBio381\IMG_2754.jpg) 
+
+*PhD., Natural Resources*  
+Lindsey is a member of a collaborative, McIntire-Stennis funded project designed to explore how the interacting influences of forest gaps and input of woody debris affect stream structure and function in the northern hardwood forests. Lindsay’s focus is on the impacts of forest succession and habitat heterogeneity on stream microbial biodiversity and function. Lindsay graduated from Rensselaer Polytechnic Institute in 2019 with a B.Sc. in Biology. Contact: Lindsey.Carlson at uvm.edu
+
+
+**Homework and lab assignments will be posted below.**
 
 ### Homework Assignments
 * [Homework 2](Homework_02.html)

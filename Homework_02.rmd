@@ -1,9 +1,10 @@
 ---
-title: "Homework_02.rmd"
+title: "Homework 2"
 author: "Lindsey Carlson"
 date: "1/26/2022"
-prettydoc::html_pretty:
-    theme: leonids
+output:
+  prettydoc::html_pretty:
+    theme: architect
     highlight: github
 ---
 
