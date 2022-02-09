@@ -12,20 +12,23 @@ output:
 library(knitr)
 opts_chunk$set(echo = FALSE)
 ```
-# Lindsey Carlson Bio381 Website  
-```{r out.width = "50%", fig.align = "center"}
-knitr::include_graphics("/Users/drand/Desktop/Comp Bio/ComputationalBiology/CarlsonBio381/myphoto.png") 
-```  
+
+<center>
+# Lindsey Carlson Bio381 Website 
+![](photo.png)
+
+
 
 *PhD Student., Natural Resources*  
-Lindsey is a member of a collaborative, McIntire-Stennis funded project designed to explore how the interacting influences of forest gaps and input of woody debris affect stream structure and function in the northern hardwood forests. Lindsey’s focus is on the impacts of forest succession and habitat heterogeneity on stream microbial biodiversity and function. Lindsay graduated from Rensselaer Polytechnic Institute in 2019 with a B.Sc. in Biology. 
+</center>
+Lindsey is a member of a collaborative, McIntire-Stennis funded project designed to explore how the interacting influences of forest gaps and input of woody debris affect stream structure and function in the northern hardwood forests. Lindsey’s focus is on the impacts of forest succession and habitat heterogeneity on stream microbial biodiversity and function. Lindsey graduated from Rensselaer Polytechnic Institute in 2019 with a B.Sc. in Biology. 
 
 Contact: Lindsey.Carlson@uvm.edu
 
 
-**Homework and lab assignments will be posted below.**
 
 ### Homework Assignments
 * [Homework 2](Homework_02.html)
 * [Homework 3](Homework_03.html)
+* [Homework 4](Homework_04.html)
 
