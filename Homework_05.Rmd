@@ -1,0 +1,111 @@
+---
+title: "Homework 5"
+author: "Lindsey Carlson"
+date: "2/9/2022"
+output:
+  prettydoc::html_pretty:
+    theme: architect
+    highlight: github
+---
+
+Question 1  
+Assign to the variable n_dims a single random integer between 3 and 10.
+```{r, ECHO = TRUE}
+n_dims <- floor(runif(1,min=3, max=10))
+print(n_dims)
+
+#create vector from 1 to n_dims^2
+vec1 <- c(seq(1:(n_dims^2)))
+print(vec1)
+
+#randomly reshuffle values 
+vec1a <- sample(vec1, (n_dims^2), replace = FALSE, prob = NULL)
+print(vec1a)
+
+#create a square matrix 
+matrix_1 <- matrix(data=vec1a, nrow=n_dims)
+print(matrix_1)
+
+#transpose the matrix
+matrix_t <- t(matrix_1)
+print(matrix_t) #note that the columns and rows have flipped (the first row is now the first column)
+
+#calculate sum and mean of first row and last row
+sum(matrix_t[1,]) #first row
+sum(matrix_t[n_dims,]) #last row
+
+mean(matrix_t[1,]) #first row
+mean(matrix_t[n_dims,]) #last row
+
+#use eigen() on matrix
+matrix_e <- eigen(matrix_t, isSymmetric(matrix_t), only.values = FALSE, EISPACK = FALSE)
+print(matrix_e)
+
+typeof(matrix_e$values) #complex values
+typeof(matrix_e$vectors) #complex values
+
+```
+
+Question 2  
+Create a list with the following named elements:
+```{r, ECHO = TRUE}
+# 4 x 4 matrix filled with random uniform values
+my_vec <- runif(4)
+my_matrix <- matrix(my_vec, nrow=2)
+print(my_matrix)
+
+#  100-element vector of TRUE or FALSE values
+my_vec2 <- runif(100)
+my_logical <- ifelse(my_vec2 > 0.5, TRUE, FALSE)
+print(my_logical)
+
+#26-element vector of all the lower-case letters in random order
+my_letters <- sample(letters, 26,replace = FALSE, prob=NULL)
+print(my_letters)
+
+#new list, which has the element [2,2] from the matrix, second element of the logical vector, and the second element of the letter vector
+my_list <- list(my_matrix[2,2], my_logical[2], my_letters[2])
+print(my_list)
+
+#confirm underlying data types
+typeof(my_list[[1]]) #double
+typeof(my_list[[2]]) #logical 
+typeof(my_list[[3]]) #character
+
+#combine the underlying elements from the new list into a single atomic vector with the c() function.
+single_vector <- c(my_matrix[2,2], my_logical[2], my_letters[2])
+typeof(single_vector) #data type is character 
+```
+
+Question 3  
+Create a data frame with two variables (= columns) and 26 cases (= rows).
+```{r, ECHO = TRUE}
+#fill it with 26 random uniform values from 0 to 10
+my_unis <- runif(26, min = 0, max = 10)
+print(my_unis)
+
+# fill it with 26 capital letters in random order
+my_letters <- sample(LETTERS, 26, replace = FALSE, prob=NULL)
+print(my_letters)
+
+dFrame <- data.frame(my_unis, my_letters)
+print(dFrame)
+
+#use a single line of code in R to select 4 random rows and replace the numerical values in those rows with NA
+dFrame[sample(length(dFrame$my_unis), size = 4, replace = FALSE, prob = NULL), 1] = NA
+print(dFrame)
+
+#for the first variable, write a single line of R code to identify which rows have the missing values
+dFrameNA <- which(is.na(dFrame))
+print(dFrameNA)
+
+#or the second variable, sort it in alphabetical order
+dFrameOrder <- dFrame[order(dFrame$my_letters),]
+print(dFrameOrder)
+
+#calculate the column mean for the first variable.
+mean(dFrame$my_unis, na.rm = TRUE)
+```
+
+[Home Page](index.html)
+
