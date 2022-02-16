@@ -1,7 +1,7 @@
 ---
 title: "Homework 5"
 author: "Lindsey Carlson"
-date: "2/9/2022"
+date: "2/16/2022"
 output:
   prettydoc::html_pretty:
     theme: architect
@@ -108,4 +108,7 @@ mean(dFrame$my_unis, na.rm = TRUE)
 ```
 
 [Home Page](index.html)
+
+
+
 
