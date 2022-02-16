@@ -8,7 +8,7 @@ output:
     highlight: github
 ---
 
-Question 1  
+### Question 1  
 Assign to the variable n_dims a single random integer between 3 and 10.
 ```{r, ECHO = TRUE}
 n_dims <- floor(runif(1,min=3, max=10))
@@ -46,7 +46,7 @@ typeof(matrix_e$vectors) #complex values
 
 ```
 
-Question 2  
+### Question 2  
 Create a list with the following named elements:
 ```{r, ECHO = TRUE}
 # 4 x 4 matrix filled with random uniform values
@@ -77,7 +77,7 @@ single_vector <- c(my_matrix[2,2], my_logical[2], my_letters[2])
 typeof(single_vector) #data type is character 
 ```
 
-Question 3  
+### Question 3  
 Create a data frame with two variables (= columns) and 26 cases (= rows).
 ```{r, ECHO = TRUE}
 #fill it with 26 random uniform values from 0 to 10
