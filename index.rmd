@@ -35,3 +35,8 @@ Contact: Lindsey.Carlson@uvm.edu
 * [Homework 6](Homework_06.html)
 
 
+
+### A Note to the TAs
+
+I just wanted to thank you for answering my constant questions during lab :)
+
