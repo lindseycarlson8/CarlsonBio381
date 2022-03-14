@@ -1,7 +1,6 @@
 ---
 title: "Computational Biology - Homepage"
 author: "Lindsey Carlson"
-date: "1/26/2022"
 output:
   prettydoc::html_pretty:
     theme: architect
