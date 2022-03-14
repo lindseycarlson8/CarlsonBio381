@@ -33,6 +33,7 @@ Contact: Lindsey.Carlson@uvm.edu
 * [Homework 4](Homework_04.html)
 * [Homework 5](Homework_05.html)
 * [Homework 6](Homework_06.html)
+* [Homework 7](Homework_07.html)
 
 
 
