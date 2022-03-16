@@ -33,7 +33,11 @@ Contact: Lindsey.Carlson@uvm.edu
 * [Homework 5](Homework_05.html)
 * [Homework 6](Homework_06.html)
 * [Homework 7](Homework_07.html)
+* [Homework 8](Homework_08.html)
 
+
+<center>
+![](photo2.png)
 
 
 ### A Note to the TAs
