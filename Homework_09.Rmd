@@ -1,0 +1,188 @@
+---
+title: "Homework 9"
+author: "Lindsey Carlson"
+date: "3/16/2022"
+output:
+  prettydoc::html_pretty:
+    theme: architect
+    highlight: github
+---
+
+## Organizing Code with Structured Programming 
+
+### 1) Use the code that you worked on in Homework #8 (creating fake data sets), and re-organize it following the principles of structured programming. Do all the work in a single chunk in your R markdown file, just as if you were writing a single R script. Start with all of your annotated functions, preliminary calls, and global variables. The program body should be only a few lines of code that call the appropriate functions and run them in the correct order. Make sure that the output from one function serves as the input to the next. You can either daisy-chain the functions or write separate lines of code to hold elements in temporary variables and pass them along.
+
+For more information on purpose of Code - [Homework 8](Homework_08.html)
+
+```{r}
+# Modeled Chl A response to Canopy Disturbances 
+# 23 March 2022
+# LSC
+
+# Initialize ---------------------------------
+library(ggplot2)
+
+##################################################
+# FUNCTION: make_df
+# purpose: read in a .csv file
+# input: x and y vectors of numeric. Must be same length
+# output: data frame
+#------------------------------------------------- 
+
+get_data <- function(beta = 0.2, n=20, shape = 1.235, scale =0.55, mean=0.2, sd=0.1){
+  
+  beta0 <- beta
+  biomass <- rgamma(n = n, shape = shape, scale = scale)
+  interc <- rnorm(n = n , mean = 0.2, sd = 0.1)
+
+  gap_frac <- biomass*beta0 + interc
+  
+  d_frame <- data.frame(biomass, gap_frac)
+  return(d_frame)
+}
+
+new_df <- get_data()
+print(new_df)
+ 
+##################################################
+# FUNCTION: calculate_model;
+# purpose: Fits an ordinary least squares regression model
+# input: x and y vectors of numeric. Must be same length
+# output: entire model summary from lm 
+#------------------------------------------------- 
+calculate_model <- function(d_frame=new_df) {
+  
+  reg_model <-lm(gap_frac~biomass, data = d_frame)
+  return(reg_model)
+  }
+
+new_model <- calculate_model()
+print(new_model)
+
+
+##################################################
+# FUNCTION: summarize_output
+# purpose: pull elements from model summary list
+# input: list from summary call of lm
+# output: vector of regression residuals 
+#------------------------------------------------- 
+summarize_output <- function(reg_model = new_model) {
+  z <- summary(reg_model)
+  return(z$residuals)
+}
+
+summarize_output()
+
+##################################################
+# FUNCTION: graph_results
+# purpose: graph data and fitted OLS line
+# input: x and y vectors of numeric. Must be same length
+# output: creates graph 
+#------------------------------------------------- 
+graph_results <- function(d_frame = new_df) {
+  
+  reg_plot <- ggplot(data=d_frame) +
+            aes(x=biomass,y=gap_frac) +
+            geom_point() +
+            stat_smooth(method=lm,se=0.95) # default se=0.95 
+  print(reg_plot) 
+}
+
+graph_results()
+
+``` 
+
+### 2) Once your code is up and working, modify your program to do something else: record a new summary variable, code a new statistical analysis, or create a different set of random variables or output graph. Do not rewrite any of your existing functions. Instead, copy them, rename them, and then modify them to do new things. Once your new functions are written, add some more lines of program code, calling a mixture of your previous functions and your new functions to get the job done.
+
+```{r}
+
+### Changing biomass from gamma to poison 
+
+
+##################################################
+# FUNCTION: get_data_pois
+# purpose: read in a .csv file
+# input: x and y vectors of numeric. Must be same length
+# output: data frame
+#------------------------------------------------- 
+
+get_data_pois <- function(beta = 0.2, n=20, lambda= 0.2, mean=0.2, sd=0.1){
+  
+  beta0 <- beta
+  biomass <- rpois(n = n, lambda = lambda)
+  interc <- rnorm(n = n , mean = 0.2, sd = 0.1)
+
+  gap_frac <- biomass*beta0 + interc
+  
+  d_frame <- data.frame(biomass, gap_frac)
+  return(d_frame)
+}
+
+new_df <- get_data_pois()
+print(new_df)
+
+ 
+##################################################
+# FUNCTION: calculate_model_pois;
+# purpose: Fits an ordinary least squares regression model
+# input: x and y vectors of numeric. Must be same length
+# output: entire model summary from lm 
+#------------------------------------------------- 
+calculate_model_pois <- function(d_frame=new_df) {
+  
+  reg_model <-lm(gap_frac~biomass, data = d_frame)
+  return(reg_model)
+  }
+
+new_model <- calculate_model_pois()
+print(new_model)
+
+
+##################################################
+# FUNCTION: summarize_output_pois
+# purpose: pull elements from model summary list
+# input: list from summary call of lm
+# output: vector of regression residuals 
+#------------------------------------------------- 
+summarize_output_pois <- function(reg_model = new_model) {
+  z <- summary(reg_model)
+  return(z$residuals)
+}
+
+summarize_output_pois()
+
+##################################################
+# FUNCTION: graph_results_pois
+# purpose: graph data and fitted OLS line
+# input: x and y vectors of numeric. Must be same length
+# output: creates graph 
+#------------------------------------------------- 
+graph_results_pois <- function(d_frame = new_df) {
+  
+  reg_plot <- ggplot(data=d_frame) +
+            aes(x=biomass,y=gap_frac) +
+            geom_point() +
+            stat_smooth(method=lm,se=0.95) # default se=0.95 
+  print(reg_plot) 
+}
+
+graph_results()
+
+
+#################################################
+
+# change the sample size from 20 to 30 
+
+get_data(n=30, shape = 1.235, scale =0.55)
+new_df_large <- get_data()
+
+calculate_model(d_frame = new_df_large)
+new_model_large <- calculate_model()
+
+summarize_output(reg_model = new_model_large)
+
+graph_results(d_frame = new_df_large)
+
+```
+
+[Home Page](index.html)

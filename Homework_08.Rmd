@@ -1,0 +1,149 @@
+---
+title: "Homework 8"
+author: "Lindsey Carlson"
+date: "3/16/2022"
+output:
+  prettydoc::html_pretty:
+    theme: architect
+    highlight: github
+---
+
+### 1. Think about an ongoing study in your lab (or a paper you have read in a different class), and decide on a pattern that you might expect in your experiment if a specific hypothesis were true.
+
+I am currently looking at how canopy gaps affect primary productivity, specifically the changes in algal community composition.  I expect an increase algal biomass with an increase in canopy gap fraction. 
+
+### 2. To start simply, assume that the data in each of your treatment groups follow a normal distribution. Specify the sample sizes, means, and variances for each group that would be reasonable if your hypothesis were true. You may need to consult some previous literature and/or an expert in the field to come up with these numbers.
+
+Consulted literature - [Stream algal biomass response to experimental phosphorus and nitrogen gradients: A case for dual nutrient management in agricultural watersheds](https://acsess.onlinelibrary.wiley.com/doi/10.1002/jeq2.20039)
+
+Looking at measurements in this paper, the benthic chl a (ug cm^-2) ranges between 0 and 2
+
+Consulted literature - [Spatial characteristics of canopy disturbances in riparian old-growth hemlock – northern hardwood forests, Adirondack Mountains, New York, USA](https://cdnsciencepub.com/doi/full/10.1139/X09-157)
+
+Slope = 0.2
+
+### 3. Using the methods we have covered in class, write code to create a random data set that has these attributes. Organize these data into a data frame with the appropriate structure.
+
+```{r, create equation}
+library(ggplot2)
+
+beta0 <- 0.2   #create slope
+
+# use gamma distribution to create biomass data based on above parameters
+biomass <- rgamma(n = 20, shape = 1.25, scale = 0.55)
+qplot(biomass,color=I("black"),fill=I("goldenrod"))
+
+# create intercept 
+interc <- rnorm(n=20, mean = 0.2, sd = 0.1)
+                  
+# creating y variable
+gap_frac <- biomass*beta0 + interc
+
+#create data frame
+d_frame <- data.frame(biomass, gap_frac)
+```
+
+
+### 4. Now write code to analyze the data (probably as an ANOVA or regression analysis, but possibly as a logistic regression or contingency table analysis. Write code to generate a useful graph of the data.
+
+```{r}
+model <- lm(gap_frac~biomass, data = d_frame) # created linear model
+
+summary(model)
+
+lm_plot <- ggplot(data=d_frame) +
+            aes(x=biomass,y=gap_frac) +
+            geom_point() +
+            stat_smooth(method=lm,se=0.95) 
+print(lm_plot)
+```
+
+### 5. Try running your analysis multiple times to get a feeling for how variable the results are with the same parameters, but different sets of random numbers.
+
+```{r}
+# Run code Second Time 
+beta0 <- 0.2   #create slope
+
+# use gamma distribution to create biomass data based on above parameters
+biomass <- rgamma(n = 20, shape = 1.25, scale = 0.55)
+qplot(biomass,color=I("black"),fill=I("goldenrod"))
+
+# create intercept 
+interc <- rnorm(n=20, mean = 0.2, sd = 0.1)
+                  
+# creating y variable
+gap_frac <- biomass*beta0 + interc
+
+#create data frame
+d_frame <- data.frame(biomass, gap_frac)
+
+model <- lm(gap_frac~biomass, data = d_frame) # created linear model
+summary(model)
+
+lm_plot <- ggplot(data=d_frame) +
+            aes(x=biomass,y=gap_frac) +
+            geom_point() +
+            stat_smooth(method=lm,se=0.95) 
+print(lm_plot)
+```
+
+```{r}
+# Run code Third Time 
+beta0 <- 0.2   #create slope
+
+# use gamma distribution to create biomass data based on above parameters
+biomass <- rgamma(n = 20, shape = 1.25, scale = 0.55)
+qplot(biomass,color=I("black"),fill=I("goldenrod"))
+
+# create intercept 
+interc <- rnorm(n=20, mean = 0.2, sd = 0.1)
+                  
+# creating y variable
+gap_frac <- biomass*beta0 + interc
+
+#create data frame
+d_frame <- data.frame(biomass, gap_frac)
+
+model <- lm(gap_frac~biomass, data = d_frame) # created linear model
+summary(model)
+
+lm_plot <- ggplot(data=d_frame) +
+            aes(x=biomass,y=gap_frac) +
+            geom_point() +
+            stat_smooth(method=lm,se=0.95) 
+print(lm_plot)
+
+```
+
+### 6/7. Now begin adjusting the means of the different groups. Given the sample sizes you have chosen, how small can the differences between the groups be (the “effect size”) for you to still detect a significant pattern (p < 0.05)?
+
+```{r}
+beta0 <- 0.2   #create slope
+
+# use gamma distribution to create biomass data based on above parameters
+biomass <- rgamma(n = 8, shape = 1.25, scale = 0.55)
+qplot(biomass,color=I("black"),fill=I("goldenrod"))
+
+# create intercept 
+interc <- rnorm(n = 8, mean = 0.2, sd = 0.1)
+                  
+# creating y variable
+gap_frac <- biomass*beta0 + interc
+
+#create data frame
+d_frame <- data.frame(biomass, gap_frac)
+
+model <- lm(gap_frac~biomass, data = d_frame) # created linear model
+summary(model)
+
+lm_plot <- ggplot(data=d_frame) +
+            aes(x=biomass,y=gap_frac) +
+            geom_point() +
+            stat_smooth(method=lm,se=0.95) 
+print(lm_plot)
+
+```
+
+After running the code with multiple different sample sizes, n = 8 was the smallest size sample group I could use in order to select a significant pattern.
+
+[Home Page](index.html)
