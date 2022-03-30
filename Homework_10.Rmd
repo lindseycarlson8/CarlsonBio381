@@ -9,7 +9,7 @@ output:
 ---
 
 ## For Loops and Randomization Tests 
-### Worked with Stephen Peters Collaer
+*Worked on some parts of the code with Stephen Peters Collaer*
 
 ### Question 1 - Using a for loop, write a function to calculate the number of zeroes in a numeric vector. Before entering the loop, set up a counter variable counter <- 0. Inside the loop, add 1 to counter each time you have a zero in the matrix. Finally, use return(counter) for the output.
 
@@ -79,7 +79,7 @@ mat_product()
 
 ### Question 4 - In the next few lectures, you will learn how to do a randomization test on your data. We will complete some of the steps today to practice calling custom functions within a for loop. Use the code from the March 31st lecture (Randomization Tests) to complete the following steps:
 
-** a. Simulate a dataset with 3 groups of data, each group drawn from a distribution with a different mean. The final data frame should have 1 column for group and 1 column for the response variable. **
+*a. Simulate a dataset with 3 groups of data, each group drawn from a distribution with a different mean. The final data frame should have 1 column for group and 1 column for the response variable.*
 ```{r}
 group <- c(rep("A", 100), rep("B", 100), rep("C", 100))
 A <- rnorm(n=100, mean = 1, sd = 0.1)
@@ -92,7 +92,7 @@ d_frame <- data.frame(group, response)
 print(d_frame)
 ```
 
-** b. Write a custom function that 1) reshuffles the response variable, and 2) calculates the mean of each group in the reshuffled data. Store the means in a vector of length 3. ** 
+*b. Write a custom function that 1) reshuffles the response variable, and 2) calculates the mean of each group in the reshuffled data. Store the means in a vector of length 3.*
 ``` {r}
 library(dplyr)
 
@@ -114,7 +114,7 @@ reshuffle()
 
 ```
 
-** c. Use a for loop to repeat the function in b 100 times. Store the results in a data frame that has 1 column indicating the replicate number and 1 column for each new group mean, for a total of 4 columns.** 
+*c. Use a for loop to repeat the function in b 100 times. Store the results in a data frame that has 1 column indicating the replicate number and 1 column for each new group mean, for a total of 4 columns.* 
 
 ```{r}
 library(tidyr)
@@ -136,7 +136,7 @@ print(results)
 
 ```
 
-** d. Use qplot() to create a histogram of the means for each reshuffled group. Or, if you want a challenge, use ggplot() to overlay all 3 histograms in the same figure. How do the distributions of reshuffled means compare to the original means? ** 
+*d. Use qplot() to create a histogram of the means for each reshuffled group. Or, if you want a challenge, use ggplot() to overlay all 3 histograms in the same figure. How do the distributions of reshuffled means compare to the original means?*
 
 ```{r}
 library(ggplot2)
