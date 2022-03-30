@@ -1,0 +1,173 @@
+---
+title: "Homework 10"
+author: "Lindsey Carlson"
+date: "3/30/2022"
+output:
+  prettydoc::html_pretty:
+    theme: architect
+    highlight: github
+---
+
+## For Loops and Randomization Tests 
+### Worked with Stephen Peters Collaer
+
+### Question 1 - Using a for loop, write a function to calculate the number of zeroes in a numeric vector. Before entering the loop, set up a counter variable counter <- 0. Inside the loop, add 1 to counter each time you have a zero in the matrix. Finally, use return(counter) for the output.
+
+``` {r}
+
+##################################################
+# FUNCTION: num_zero
+# purpose: count number of zeros 
+# input: x vectors of numeric
+# output: count of number of zeros
+#------------------------------------------------- 
+num_zeros <- function(vector1 = sample(0:3, size = 1000, replace = TRUE)){
+  counter <- 0
+  for(i in 1:length(vector1)){
+    if(vector1[i]== 0){
+      counter <- counter + 1
+    }
+  }
+  return(counter)
+} 
+ 
+num_zeros()
+
+``` 
+
+### Question 2 - Use subsetting instead of a loop to rewrite the function as a single line of code.
+
+```{r}
+##################################################
+# FUNCTION: num_zero_sub
+# purpose: count number of zeros 
+# input: x vectors of numeric
+# output: count of number of zeros
+#------------------------------------------------- 
+num_zeros_sub <- function(vector1 = sample(0:3, size = 1000, replace = TRUE)){
+ length(vector1[vector1 == 0])
+}
+  
+num_zeros_sub()
+
+```
+
+
+### Question 3 - Write a function that takes as input two integers representing the number of rows and columns in a matrix. The output is a matrix of these dimensions in which each element is the product of the row number x the column number.
+
+``` {r}
+##################################################
+# FUNCTION: mat_product
+# purpose: multiply the row number x by column number
+# input: number of rows and columns in a matrix
+# output: product of the row number and column number 
+#------------------------------------------------- 
+
+mat_product <- function(nrow=4, ncol=4){
+  mat <- matrix(nrow=4, ncol=4)
+  for(i in 1:nrow){
+    for(j in 1:ncol){
+      mat[i,j] <- i*j
+    }
+  }
+  print(mat)
+}
+
+mat_product()
+
+``` 
+
+### Question 4 - In the next few lectures, you will learn how to do a randomization test on your data. We will complete some of the steps today to practice calling custom functions within a for loop. Use the code from the March 31st lecture (Randomization Tests) to complete the following steps:
+
+** a. Simulate a dataset with 3 groups of data, each group drawn from a distribution with a different mean. The final data frame should have 1 column for group and 1 column for the response variable. **
+```{r}
+group <- c(rep("A", 100), rep("B", 100), rep("C", 100))
+A <- rnorm(n=100, mean = 1, sd = 0.1)
+B <- rnorm(n=100, mean = 2, sd = 0.1)
+C <- rnorm(n=100, mean = 3, sd = 0.1)
+
+response <- c(A, B, C)
+d_frame <- data.frame(group, response)
+
+print(d_frame)
+```
+
+** b. Write a custom function that 1) reshuffles the response variable, and 2) calculates the mean of each group in the reshuffled data. Store the means in a vector of length 3. ** 
+``` {r}
+library(dplyr)
+
+##################################################
+# FUNCTION: reshuffle
+# purpose: get means of reshuffled data
+# input: groups of data (A, B, C)
+# output: vector length of 3 with means of each group
+#------------------------------------------------- 
+reshuffle <- function(df = d_frame, response = response){
+  colnames(d_frame) <- c('group', 'response')
+  new_shuff <- sample(1:nrow(d_frame), replace=FALSE)
+    d_frame <- data.frame(group, new_shuff)
+  sum_mean <- d_frame %>% group_by(group) %>% summarise(mean = mean(new_shuff))
+      return(sum_mean)
+}
+
+reshuffle()
+
+```
+
+** c. Use a for loop to repeat the function in b 100 times. Store the results in a data frame that has 1 column indicating the replicate number and 1 column for each new group mean, for a total of 4 columns.** 
+
+```{r}
+library(tidyr)
+
+results <- data.frame()
+  
+for(i in 1:100){
+  shuff <- sample(1:nrow(d_frame), replace=FALSE)
+    d_frame_shuff <- data.frame(group, shuff)
+  sum_mean <- d_frame_shuff %>% group_by(group) %>%    
+    summarise(mean = mean(shuff))
+  df <- sum_mean %>% pivot_wider(names_from = group, values_from = mean)
+  final_df <- cbind(i, df)
+  
+  results <- rbind(results, final_df)
+}
+
+print(results)
+
+```
+
+** d. Use qplot() to create a histogram of the means for each reshuffled group. Or, if you want a challenge, use ggplot() to overlay all 3 histograms in the same figure. How do the distributions of reshuffled means compare to the original means? ** 
+
+```{r}
+library(ggplot2)
+
+mean_plotA <- qplot(x=A, data = results,
+                   geom = "histogram",
+                   xlab = "Mean of Group A",
+                   ylab = "Count",
+                   color=I("black"),
+                   fill=I("Steelblue3"))
+
+  print(mean_plotA) 
+  
+mean_plotB <- qplot(x=B, data = results,
+                   geom = "histogram",
+                   xlab = "Mean of Group B",
+                   ylab = "Count",
+                   color=I("black"),
+                   fill=I("Steelblue3"))
+
+  print(mean_plotB) 
+
+mean_plotC <- qplot(x=C, data = results,
+                   geom = "histogram",
+                   xlab = "Mean of Group C",
+                   ylab = "Count",
+                   color=I("black"),
+                   fill=I("Steelblue3"))
+
+  print(mean_plotC) 
+
+```
+`
+[Home Page](index.html)
