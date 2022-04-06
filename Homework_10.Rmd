@@ -104,7 +104,7 @@ library(dplyr)
 #------------------------------------------------- 
 reshuffle <- function(df = d_frame, response = response){
   colnames(d_frame) <- c('group', 'response')
-  new_shuff <- sample(1:nrow(d_frame), replace=FALSE)
+  new_shuff <- sample(d_frame$response, replace=FALSE)
     d_frame <- data.frame(group, new_shuff)
   sum_mean <- d_frame %>% group_by(group) %>% summarise(mean = mean(new_shuff))
       return(sum_mean)
@@ -122,7 +122,7 @@ library(tidyr)
 results <- data.frame()
   
 for(i in 1:100){
-  shuff <- sample(1:nrow(d_frame), replace=FALSE)
+  shuff <- sample(d_frame$response, replace=FALSE)
     d_frame_shuff <- data.frame(group, shuff)
   sum_mean <- d_frame_shuff %>% group_by(group) %>%    
     summarise(mean = mean(shuff))
@@ -139,35 +139,100 @@ print(results)
 *d. Use qplot() to create a histogram of the means for each reshuffled group. Or, if you want a challenge, use ggplot() to overlay all 3 histograms in the same figure. How do the distributions of reshuffled means compare to the original means?*
 
 ```{r}
+
 library(ggplot2)
 
-mean_plotA <- qplot(x=A, data = results,
-                   geom = "histogram",
-                   xlab = "Mean of Group A",
-                   ylab = "Count",
-                   color=I("black"),
-                   fill=I("Steelblue3"))
+# Calculate quantiles A - 
 
-  print(mean_plotA) 
-  
-mean_plotB <- qplot(x=B, data = results,
-                   geom = "histogram",
-                   xlab = "Mean of Group B",
-                   ylab = "Count",
-                   color=I("black"),
-                   fill=I("Steelblue3"))
+quantile(x=A, probs = 0.975)
 
-  print(mean_plotB) 
 
-mean_plotC <- qplot(x=C, data = results,
-                   geom = "histogram",
-                   xlab = "Mean of Group C",
-                   ylab = "Count",
-                   color=I("black"),
-                   fill=I("Steelblue3"))
+mean_plotA <- ggplot(data = results, aes(x=A)) +
+    geom_histogram(color = "black", fill = "Steelblue3") +
+    geom_vline(aes(xintercept=mean(A)),
+            color="red", linetype="dashed", size=1) + 
+  geom_vline(aes(xintercept= quantile(x=A, probs= 0.025)),
+             color="black", size=1) +
+  geom_vline(aes(xintercept= quantile(x=A, probs= 0.975)),
+             color="black", size=1)
 
-  print(mean_plotC) 
+print(mean_plotA)
+
+
+
+mean_plotB <- ggplot(data = results, aes(x=B)) +
+    geom_histogram(color = "black", fill = "darkolivegreen4") +
+    geom_vline(aes(xintercept=mean(B)),
+            color="red", linetype="dashed", size=1) + 
+  geom_vline(aes(xintercept= quantile(x=B, probs= 0.025)),
+             color="black", size=1) +
+  geom_vline(aes(xintercept= quantile(x=B, probs= 0.975)),
+             color="black", size=1)
+
+print(mean_plotB)
+
+
+
+mean_plotC <- ggplot(data = results, aes(x=C)) +
+    geom_histogram(color = "black", fill = "darksalmon") +
+    geom_vline(aes(xintercept=mean(C)),
+            color="red", linetype="dashed", size=1) + 
+  geom_vline(aes(xintercept= quantile(x=C, probs= 0.025)),
+             color="black", size=1) +
+  geom_vline(aes(xintercept= quantile(x=C, probs= 0.975)),
+             color="black", size=1)
+
+print(mean_plotC)
 
 ```
-`
+
+*Looking at my histograms, you can see that the means are different so I added a mean line (red) on the histogram graphs of the observed values and the quantile lines (red) represent the 95% confidence interval*
+
+*Worked with Stephen on this code*
+
+
+### 5. Use the code from the upcoming April 2nd lecture (Randomization Tests) to design and conduct a randomization test for some of your own data. 
+
+```{r}
+
+library(tidyverse)
+
+simulated <- results %>% select(A:C) %>% pivot_longer(cols= A:C, names_to = "group", values_to = "response")
+  
+  
+##################################################
+# function: get_pval_obs
+# calculate p value from obs
+# input: vector of simulated metrics
+# output: lower, upper tail probability values
+#------------------------------------------------- 
+get_pval_obs <- function(df = d_frame) {
+  test <- aov( response ~ group, data = df)
+  p_val <- summary(test)[[1]][["Pr(>F)"]][1]
+  return(p_val)
+}
+
+get_pval_obs()
+
+
+x_obs <- get_pval_obs()
+
+
+##################################################
+# function: get_pval_sim
+# calculate p value from simulation
+# input: list of observed metric, and vector of simulated metrics
+# output: lower, upper tail probability values
+#------------------------------------------------- 
+get_pval_sim <- function(df = simulated) {
+  test <- aov( response ~ group, data = df)
+  p_val <- summary(test)[[1]][["Pr(>F)"]][1]
+  return(p_val)
+}
+
+get_pval_sim()
+
+```
+
+
 [Home Page](index.html)
