@@ -1,0 +1,60 @@
+---
+title: "Homework 12"
+author: "Lindsey Carlson"
+date: "4/13/2022"
+output:
+  prettydoc::html_pretty:
+    theme: architect
+    highlight: github
+---
+
+# Advanced ggplotting
+
+### For this exercise, use your newly-developed ggplot chops to create some nice graphs from your own data (If you do not have a good data frame to use for graphics, use one of the many built-in data frames from R (other than mpg, which we are using in class)). Experiment with different themes, theme base sizes, aesthetics, mappings, and faceting. When you are finished, try exporting them to high quality pdfs, jpgs, eps files, or other formats that you would use for submission to a journal. 
+
+```{r}
+library(rLakeAnalyzer)
+library(readxl)
+library(ggplot2)
+library(lubridate)
+library(patchwork)
+library(ggthemes)
+
+CarmiSpring <- read_xlsx("LakeData.xlsx", sheet="Spring")
+CarmiSpring$Date <- as_datetime(CarmiSpring$Date)
+
+#DO Plots
+
+springDO<-ggplot(CarmiSpring, aes(x=Date, y=DO))+
+  geom_point(color="blueviolet")+
+  geom_line(color="blueviolet")+
+  ylim(7.25,12)+
+  labs(x="Date", y="DO (mg/L)", title = "Early Summer")+
+  theme_grey()
+
+CarmiSummer <- read_xlsx("LakeData.xlsx", sheet="Summer")
+CarmiSummer$Date <- as_datetime(CarmiSummer$Date)
+
+summerDO<-ggplot(CarmiSummer, aes(x=Date, y=DO), )+
+  geom_point(color="darkgreen")+
+  geom_line(color="darkgreen")+
+  ylim(7.25,12)+
+  labs(x="Date", y="DO (mg/L)", title = "Mid-Summer")+
+  theme_grey()
+
+CarmiFall <- read_xlsx("LakeData.xlsx", sheet="Fall")
+CarmiFall$Date <- as_datetime(CarmiFall$Date)
+
+fallDO<-ggplot(CarmiFall, aes(x=Date, y=DO))+
+  geom_point(color="darkorange2")+
+  geom_line(color="darkorange2")+
+  ylim(7.25,12)+
+  labs(x="Date", y="DO (mg/L)", title = "Late Summer")+
+  theme_grey()
+
+springDO + summerDO + fallDO + plot_layout(ncol=1) + plot_annotation('DO Trends of Lake Carmi, VT', caption = 'Data from VT DEC')
+
+```
+
+
+[Home Page](index.html) 
